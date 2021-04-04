@@ -1,0 +1,23 @@
+# Service is responsible for enabling network access to a set of pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: scheduler
+  name: scheduler
+spec:
+  # Expose the service on a static port on each node
+  # so that we can access the service from outside the cluster
+  type: NodePort
+
+  ports:
+    # Three types of ports for a service
+    # nodePort - a static port assigned on each the node
+    # port - port exposed internally in the cluster
+    # targetPort - the container port to send requests to
+    - name: "5555"
+      nodePort: 30555
+      port: 5555
+      targetPort: 5555
+  selector:
+    app: scheduler

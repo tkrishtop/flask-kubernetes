@@ -1,0 +1,29 @@
+version: '3'
+services:
+  scheduler:
+    container_name: scheduler
+    image: tkrishtop/scheduler:scheduler
+    ports:
+      - 5555:5555
+    networks:
+      - default
+
+  prometheus:
+    container_name: prometheus
+    image: tkrishtop/scheduler:prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - default
+
+  grafana:
+    container_name: grafana
+    image: tkrishtop/scheduler:grafana
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    ports:
+      - 3000:3000
+    networks:
+      - default
+    depends_on:
+      - prometheus
